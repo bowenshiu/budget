@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta charset="UTF-8">
+       <title>購物工具</title>
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <link href="css/bootstrap.min.css" rel="stylesheet">
+       <style type="text/css">
+            .page-header{
+                background-color:#33ccff;
+                padding-top:6px;
+                font-family:arial;
+            }
+            .center {
+                padding-top:6px;
+            }
+            #price {
+                width:6em;
+            }
+            li {
+                color:rgb(0,0,0);
+            }
+            span {
+                font-family:arial;
+                font-weight: bold;
+            }
+            .text {
+                font-size:80%;
+            }
+            
+            /* Base styles (regardless of theme) */
+            .bs-callout {
+                margin: 20px 0;
+                padding: 15px 30px 15px 15px;
+                border-left: 5px solid #eee;
+            }
+             
+            .bs-callout h4 {
+                margin-top: 0;
+            }
+             
+            .bs-callout p:last-child {
+                margin-bottom: 0;
+            }
+             
+            .bs-callout code,
+            .bs-callout .highlight {
+                background-color: #fff;
+            }
+             
+            /* Themes for different contexts */
+            .bs-callout-danger {
+                background-color: #fcf2f2;
+                border-color: #dFb5b4;
+            }
+             
+            .bs-callout-warning {
+                background-color: #fefbed;
+                border-color: #f1e7bc;
+            }
+             
+            .bs-callout-info {
+                background-color: #f0f7fd;
+                border-color: #d0e3f0;
+            }
+             
+            .bs-callout-danger h4,
+            .bs-callout-danger a.alert-link {
+                color: #B94A48;
+            }
+             
+            .bs-callout-warning h4,
+            .bs-callout-warning a.alert-link {
+                color: #C09853;
+            }
+             
+            .bs-callout-info h4,
+            .bs-callout-info a.alert-link {
+                color: #3A87AD;
+            }
+             
+            .bs-callout a.alert-link {
+                font-weight: bold;
+            }
+       </style>
+    </head>
+    <body>
+        
+<!--重點提示內容-->
+       
+        <div class="container">
+            <div class="bs-callout bs-callout-danger">
+            <h4>小資族購物工具</h4>
+            <p>哪一個促銷方式才是真的優惠呢? 幫您精算出 規格價! 規格價! 規格價! 讓您來挑選!!!</p>
+        </div>
+           <div class="page-header"><h4>&nbsp;&nbsp;試算列表</h4></div>
+        </div>
+        
+        <div class="container" id="itemGroup">
+              <div class="row" id="productItemMother">
+                 <div class="col-xs-12 col-sm-4 col-lm-1" id="productItemMother_1">
+                    <span class="text"/>1.&nbsp;品名:&nbsp;&nbsp;<input type="text" id="product" size="10" maxlength="10" placeholder="品名輸入區" autofocus/></span>
+                    <br>
+                    <span class="text"/>&nbsp;&nbsp;&nbsp;&nbsp;單價:&nbsp;&nbsp;<input type="number" id="price" min="0" max="99999" value="0" step="100" style="width:8em"/></span>
+                    <br>
+                    <span class="text"/>
+                    <form class="center">&nbsp;&nbsp;&nbsp;&nbsp;折扣:&nbsp;
+                        <select id="discount">
+                            <option value="1">無折扣</option>
+                            <option value="0.5">買1送1</option>
+                            <option value="0.67">買2送1</option>
+                            <option value="0.75">買3送1</option>
+                            <option value="0.8">買4送1</option>
+                            <option value="0.833">買5送1</option>
+                            <option value="0.9">第二件八折</option>
+                            <option value="0.75">第二件半價</option>
+                            <option value="0.4">4折</option>
+                            <option value="0.5">5折</option>
+                            <option value="0.6">6折</option>
+                            <option value="0.65">65折</option>
+                            <option value="0.7">7折</option>
+                            <option value="0.75">75折</option>
+                            <option value="0.8">8折</option>
+                            <option value="0.9">9折</option>
+                            <option value="1">附贈品</option>
+                        </select> 
+                    </form></span>
+                    <span class="text"/>
+                    <form class="center">&nbsp;&nbsp;&nbsp;&nbsp;數量:&nbsp;
+                        <select id="amount">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>    
+                    </form></span>
+                    <span class="text"/>規格量:&nbsp;</span>
+                    <input type="number" id="unit" min="0" max="99999" value="0" step="10" style="width:4em"/>(mL, g)
+                    <br>
+                    <span class="text"/>規格價:&nbsp;</span>
+                    <span id="unitPrice" value="0" size="3"></span>
+                    <span class="text"/>元</span>
+                    <br>
+                    <span class="text"/>&nbsp;&nbsp;&nbsp;&nbsp;金額:&nbsp;</span>
+                    <span id="cost" value="0"></span>
+                    <span class="text"/>元</span>
+                    <br>
+                    <input type="button" id="esitmateBtn_1" onclick="esitmateBtn_1()" value="試算" class="btn btn-warning"/>
+                    <input type="button" id="addBtn_1" onclick="addBtn_1()" value="新增" class="btn btn-success"/>
+                </div>
+               
+                <div class="col-xs-12 col-sm-4 col-lm-1" id="productItemMother_2">
+                    <span class="text"/>2.&nbsp;品名:&nbsp;&nbsp;<input type="text" id="product_2" size="10" maxlength="10" placeholder="品名輸入區" autofocus/></span>
+                    <br>
+                    <span class="text"/>&nbsp;&nbsp;&nbsp;&nbsp;單價:&nbsp;&nbsp;<input type="number" id="price_2" min="0" max="99999" value="0" step="100" style="width:8em"/></span>
+                    <br>
+                    <span class="text"/>
+                    <form class="center">&nbsp;&nbsp;&nbsp;&nbsp;折扣:&nbsp;
+                        <select id="discount_2">
+                            <option value="1">無折扣</option>
+                            <option value="0.5">買1送1</option>
+                            <option value="0.67">買2送1</option>
+                            <option value="0.75">買3送1</option>
+                            <option value="0.8">買4送1</option>
+                            <option value="0.833">買5送1</option>
+                            <option value="0.9">第二件八折</option>
+                            <option value="0.75">第二件半價</option>
+                            <option value="0.4">4折</option>
+                            <option value="0.5">5折</option>
+                            <option value="0.6">6折</option>
+                            <option value="0.65">65折</option>
+                            <option value="0.7">7折</option>
+                            <option value="0.75">75折</option>
+                            <option value="0.8">8折</option>
+                            <option value="0.9">9折</option>
+                            <option value="1">附贈品</option>
+                        </select> 
+                    </form></span>
+                    <span class="text"/>
+                    <form class="center">&nbsp;&nbsp;&nbsp;&nbsp;數量:&nbsp;
+                        <select id="amount_2">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>    
+                    </form></span>
+                    <span class="text"/>規格量:&nbsp;</span>
+                    <input type="number" id="unit_2" min="0" max="99999" value="0" step="10" style="width:4em"/>(mL, g)
+                    <br>
+                    <span class="text"/>規格價:&nbsp;</span>
+                    <span id="unitPrice_2" value="0" size="3"></span>
+                    <span class="text"/>元</span>
+                    <br>
+                    <span class="text"/>&nbsp;&nbsp;&nbsp;&nbsp;金額:&nbsp;</span>
+                    <span id="cost_2" value="0"></span>
+                    <span class="text"/>元</span>
+                    <br>
+                    <input type="button" id="esitmateBtn" onclick="esitmateBtn_2()" value="試算" class="btn btn-warning"/>
+                    <input type="button" id="addBtn" onclick="addBtn_2()" value="新增" class="btn btn-success"/>
+                </div>
+                
+                <div class="col-xs-12 col-sm-4 col-lm-1" id="productItemMother_3">
+                    <span class="text"/>3.&nbsp;品名:&nbsp;&nbsp;<input type="text" id="product_3" size="10" maxlength="10" placeholder="品名輸入區" autofocus/></span>
+                    <br>
+                    <span class="text"/>&nbsp;&nbsp;&nbsp;&nbsp;單價:&nbsp;&nbsp;<input type="number" id="price_3" min="0" max="99999" value="0" step="100" style="width:8em"/></span>
+                    <br>
+                    <span class="text"/>
+                    <form class="center">&nbsp;&nbsp;&nbsp;&nbsp;折扣:&nbsp;
+                        <select id="discount_3">
+                            <option value="1">無折扣</option>
+                            <option value="0.5">買1送1</option>
+                            <option value="0.67">買2送1</option>
+                            <option value="0.75">買3送1</option>
+                            <option value="0.8">買4送1</option>
+                            <option value="0.833">買5送1</option>
+                            <option value="0.9">第二件八折</option>
+                            <option value="0.75">第二件半價</option>
+                            <option value="0.4">4折</option>
+                            <option value="0.5">5折</option>
+                            <option value="0.6">6折</option>
+                            <option value="0.65">65折</option>
+                            <option value="0.7">7折</option>
+                            <option value="0.75">75折</option>
+                            <option value="0.8">8折</option>
+                            <option value="0.9">9折</option>
+                            <option value="1">附贈品</option>
+                        </select> 
+                    </form></span>
+                    <span class="text"/>
+                    <form class="center">&nbsp;&nbsp;&nbsp;&nbsp;數量:&nbsp;
+                        <select id="amount_3">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                        </select>    
+                    </form></span>
+                    <span class="text"/>規格量:&nbsp;</span>
+                    <input type="number" id="unit_3" min="0" max="99999" value="0" step="10" style="width:4em"/>(mL, g)
+                    <br>
+                    <span class="text"/>規格價:&nbsp;</span>
+                    <span id="unitPrice_3" value="0" size="3"></span>
+                    <span class="text"/>元</span>
+                    <br>
+                    <span class="text"/>&nbsp;&nbsp;&nbsp;&nbsp;金額:&nbsp;</span>
+                    <span id="cost_3" value="0"></span>
+                    <span class="text"/>元</span>
+                    <br>
+                    <input type="button" id="esitmateBtn_3" onclick="esitmateBtn_3()" value="試算" class="btn btn-warning"/>
+                    <input type="button" id="addBtn_3" onclick="addBtn_3()" value="新增" class="btn btn-success"/>
+                </div>
+              </div>
+        </div>
+        
+<!--結帳清單-->
+            
+        <div class="container">
+              <div class="page-header"><h4>&nbsp;&nbsp;結帳清單</h4></div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-6 col-lm-1">
+                    <select id="checkList" size="10">
+                        
+                    </select> 
+                </div>
+                <div class="col-xs-12 col-sm-6 col-lm-1" id="total">
+                </div>
+              </div>     
+        </div>
+ 
+ <!--工具列-->
+ 
+        <div class="container">
+              <div class="page-header"><h4>&nbsp;&nbsp;工具列</h4></div>
+              <div class="row">
+                <div class="col-xs-12 col-sm-4 col-lm-1">
+                    <button id="removeCheckBoxBtn" onclick="remove()" type="button" class="btn btn-danger btn-lg">移除選取清單項</button>
+                </div>
+              </div>     
+        </div>
+        
+<!--影藏金額區-->
+        
+        <div>
+            <ol id="hideCost">
+                
+            </ol>
+        </div>
+        <script>
+        
+// 試算按鈕 
+
+        function esitmateBtn_1()
+        {
+            var n = $("#amount").val();
+            var newPrice = $("#price").val() * $("#discount").val(); 
+            var momey = parseInt(newPrice) * n;
+            var nuit = $("#unit").val();
+            var newNuit = nuit*n;
+            var nuitPrice = newPrice*n/newNuit;
+            var newNuitPrice = nuitPrice.toString();
+            var str = newNuitPrice.substring(0, 7);
+            $("#unitPrice").text(str);
+            $("#cost").text(momey);
+        }
+        
+        function esitmateBtn_2()
+        {
+            var n = $("#amount_2").val();
+            var newPrice = $("#price_2").val() * $("#discount_2").val(); 
+            var momey = parseInt(newPrice) * n;
+            var nuit = $("#unit_2").val();
+            var newNuit = nuit*n;
+            var nuitPrice = newPrice*n/newNuit;
+            var newNuitPrice = nuitPrice.toString();
+            var str = newNuitPrice.substring(0, 7);
+            $("#unitPrice_2").text(str);
+            $("#cost_2").text(momey);
+        }
+        
+        function esitmateBtn_3()
+        {
+            var n = $("#amount_3").val();
+            var newPrice = $("#price_3").val() * $("#discount_3").val(); 
+            var momey = parseInt(newPrice) * n;
+            var nuit = $("#unit_3").val();
+            var newNuit = nuit*n;
+            var nuitPrice = newPrice*n/newNuit;
+            var newNuitPrice = nuitPrice.toString();
+            var str = newNuitPrice.substring(0, 7);
+            $("#unitPrice_3").text(str);
+            $("#cost_3").text(momey);
+        }
+        
+        
+        var totalMomey=0;
+        
+//新增按鈕   加入請先按試算紐判斷debug
+        
+        function addBtn_1()
+        {
+            var productInput = $("#product").val();
+            var priceInput = $("#price").val();
+            if (productInput==""||priceInput=="0")
+            {
+                alert('請輸入"品名與單價"');
+            }
+            else { 
+                var costArea = document.getElementById("cost").innerText;
+                if (costArea=="")
+                {
+                    alert('請先"試算"');
+                }
+                else
+                {
+                    $("#checkList").append("<option>品名:&nbsp;" + $("#product").val() + "&nbsp;&nbsp;&nbsp;&nbsp;金額:&nbsp;"  + $("#cost").text()+"</option><br>");
+                    var intTotal= Number($('#cost').text());
+                    totalMomey += intTotal;
+                    checkListLastIndex = document.getElementById("checkList").length - 1; //新增的那一項編號
+                    $("#hideCost").append("<li value="+ checkListLastIndex + ">" +intTotal + "</li>");//暫存在旁邊, 刪除時可以帶進來扣掉
+                    $("#total").text(" 總額: " +  totalMomey);
+                    $("li").hide();
+                }
+            
+            }
+        }
+        
+        function addBtn_2()
+        {
+            var productInput = $("#product_2").val();
+            var priceInput = $("#price_2").val();
+            if (productInput==""||priceInput=="0")
+            {
+                alert('請輸入"品名與單價"');
+            }
+            else { 
+            var costArea = document.getElementById("cost_2").innerText;
+                if (costArea=="")
+                {
+                    alert('請先"試算"');
+                }
+                else
+                {
+                    $("#checkList").append("<option>品名:&nbsp;" + $("#product_2").val() + "&nbsp;&nbsp;&nbsp;&nbsp;金額:&nbsp;"  + $("#cost_2").text()+"</option><br>");
+                    var intTotal= Number($('#cost_2').text());
+                    totalMomey += intTotal;
+                    checkListLastIndex = document.getElementById("checkList").length - 1; //新增的那一項編號
+                    $("#hideCost").append("<li value="+ checkListLastIndex + ">" +intTotal + "</li>");//暫存在旁邊, 刪除時可以帶進來扣掉
+                    $("#total").text(" 總額: " +  totalMomey);
+                    $("li").hide();
+                }
+            }
+        }
+        
+        function addBtn_3()
+        {
+            var productInput = $("#product_3").val();
+            var priceInput = $("#price_3").val();
+            if (productInput==""||priceInput=="0")
+            {
+                alert('請輸入"品名與單價"');
+            }
+            else { 
+            var costArea = document.getElementById("cost_3").innerText;
+                if (costArea=="")
+                {
+                    alert('請先"試算"');
+                }
+                else
+                {
+                    $("#checkList").append("<option>品名:&nbsp;" + $("#product_3").val() + "&nbsp;&nbsp;&nbsp;&nbsp;金額:&nbsp;"  + $("#cost_3").text()+"</option><br>");
+                    var intTotal= Number($('#cost_3').text());
+                    totalMomey += intTotal;
+                    checkListLastIndex = document.getElementById("checkList").length - 1; //新增的那一項編號
+                    $("#hideCost").append("<li value="+ checkListLastIndex + ">" +intTotal + "</li>");//暫存在旁邊, 刪除時可以帶進來扣掉
+                    $("#total").text(" 總額: " +  totalMomey);
+                    $("li").hide();
+                }
+            }
+        }
+        
+        var delHideCost=0;
+        
+// 移除功能函式 
+        
+        function remove()
+        {
+            if (document.getElementById("checkList").selectedIndex !=-1)  
+            {
+                var checkListGroup = document.getElementById("checkList");
+                var deleteHideCostValue = document.getElementById("checkList").selectedIndex;
+                var deletehideCost = $("li").eq(deleteHideCostValue).text();
+                totalMomey -= deletehideCost;
+                $("#total").text(" 總額: " +  totalMomey);
+                $("li").eq(deleteHideCostValue).remove();
+                checkListGroup.remove(checkListGroup.selectedIndex); 
+            } 
+        
+        }
+        
+        </script>
+    </body>
+</html>
